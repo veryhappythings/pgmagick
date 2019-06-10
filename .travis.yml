@@ -33,7 +33,7 @@ addons:
 
 install:
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5"* ]]; then python setup.py install; fi
-    - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6"* ]]; then sudo mkdir -p /usr/lib/python3.6/site-packages/; /usr/bin/python3.6 setup.py install; fi
+    - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6"* ]]; then sudo mkdir -p /usr/lib/python3.6/site-packages/; sudo /usr/bin/python3.6 setup.py install; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.7"* ]]; then python setup.py install; fi
 
 script:
