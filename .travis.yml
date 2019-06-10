@@ -3,6 +3,11 @@ dist: trusty
 
 matrix:
     include:
+        - python: "3.5"
+          language: python
+          env: TARGET=linux
+          dist: xenial      # use python3.5
+          sudo: required
         - python: "3.6"
           language: python
           env: TARGET=linux
@@ -27,9 +32,11 @@ before_install:
     - ls /home/travis
 
 install:
+    - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5"* ]]; then python setup.py install; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6"* ]]; then python setup.py install; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.7"* ]]; then python setup.py install; fi
 
 script:
+    - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5"* ]]; then make test; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6"* ]]; then make test; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.7"* ]]; then make test; fi
