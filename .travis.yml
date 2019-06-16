@@ -11,16 +11,7 @@ matrix:
               - sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu disco universe"
               - sudo add-apt-repository -y ppa:deadsnakes/ppa
               - sudo apt-get update
-              - sudo apt-get install -y python3.6 python3.6-dev
-              - ls /usr/bin
-
-addons:
-    apt:
-        packages:
-            - libboost-python-dev
-            - libgraphicsmagick++1-dev
-            - python3-setuptools
-            - gsfonts
+              - sudo apt-get install -y python3.6 python3.6-dev libboost-python-dev libgraphicsmagick++1-dev python3-setuptools gsfonts
 
 install:
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6"* ]]; then sudo mkdir -p /usr/lib/python3.6/site-packages/; sudo /usr/bin/python3.6 setup.py install; fi
