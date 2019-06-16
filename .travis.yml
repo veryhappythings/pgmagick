@@ -18,6 +18,16 @@ matrix:
           env: TARGET=linux
           dist: xenial      # use python3.5
           sudo: required
+        - python: "3.6"
+          language: python
+          env: TARGET=linux
+          dist: xenial
+          before_install:
+              - sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu disco main"
+              - sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu disco universe"
+              - sudo add-apt-repository -y ppa:deadsnakes/ppa
+              - sudo apt-get update
+              - sudo apt-get install -y python3.6 python3.6-dev libboost-python-dev libgraphicsmagick++1-dev python3-setuptools gsfonts
     allow_failures:
         - python: "3.2"
 
@@ -45,12 +55,14 @@ install:
     - if [[ "$TRAVIS_PYTHON_VERSION" == "2."* ]]; then sudo /usr/bin/python setup.py install; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.4"* ]]; then sudo mkdir -p /usr/lib/python3.4/site-packages/ ; sudo /usr/bin/python3 setup.py install; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5"* ]]; then sudo mkdir -p /usr/lib/python3.5/site-packages/ ; sudo /usr/bin/python3 setup.py install; fi
+    - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6"* ]]; then sudo mkdir -p /usr/lib/python3.6/site-packages/ ; sudo /usr/bin/python3.6 setup.py install; fi
     - if [[ "$TARGET" == "macosx2" ]]; then python setup.py install; fi
     - if [[ "$TARGET" == "macosx3" ]]; then python3 setup.py install; fi
 
 script:
     - if [[ "$TRAVIS_PYTHON_VERSION" == "2."* ]]; then PYTHON=/usr/bin/python make test; fi
     - if [[ "$TRAVIS_PYTHON_VERSION" == "3."* ]]; then PYTHON=/usr/bin/python3 make test; fi
+    - if [[ "$TRAVIS_PYTHON_VERSION" == "3.6"* ]]; then PYTHON=/usr/bin/python3.6 make test; fi
     - if [[ "$TARGET" == "macosx2" ]]; then PYTHON=`which python` make test; fi
     - if [[ "$TARGET" == "macosx3" ]]; then PYTHON=`which python3` make test; fi
     - ls setup.py
